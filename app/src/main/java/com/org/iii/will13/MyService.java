@@ -34,9 +34,11 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        Log.v("will", "onStartCommand()");
-        boolean isStart = intent.getBooleanExtra("isStart", false);
-        if (isStart) {
-            i = intent.getIntExtra("value", -100);
+        if (intent != null) {
+            boolean isStart = intent.getBooleanExtra("isStart", false);
+            if (isStart) {
+                i = intent.getIntExtra("value", -100);
+            }
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -56,7 +58,11 @@ public class MyService extends Service {
     private class MyTimer extends TimerTask {
         @Override
         public void run() {
-            Log.v("will", "i = " + i++);
+//            Log.v("will", "i = " + i++);
+            Intent it = new Intent("will");
+            it.putExtra("data", "i = " + i++);
+            sendBroadcast(it);
+
         }
     }
 }
